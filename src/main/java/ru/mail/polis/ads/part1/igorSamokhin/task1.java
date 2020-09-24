@@ -1,4 +1,4 @@
-package ru.mail.polis.ads;
+package ru.mail.polis.ads.part1.igorSamokhin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,16 +7,14 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-/**
- * Problem solution template.
- */
-public final class SolveTemplate {
-    private SolveTemplate() {
+public final class task1 {
+    private task1() {
         // Should not be instantiated
     }
 
     private static void solve(final FastScanner in, final PrintWriter out) {
-        // Write me
+        int num = in.nextInt();
+        out.println(num / 10 + " " + num % 10);
     }
 
     private static class FastScanner {
