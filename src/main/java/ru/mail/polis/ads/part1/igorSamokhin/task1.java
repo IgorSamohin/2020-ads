@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+//https://www.e-olymp.com/ru/submissions/7392622
 public final class task1 {
     private task1() {
-        // Should not be instantiated
     }
 
     private static void solve(final FastScanner in, final PrintWriter out) {
