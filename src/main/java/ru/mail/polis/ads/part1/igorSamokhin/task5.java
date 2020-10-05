@@ -10,6 +10,8 @@ import java.util.StringTokenizer;
 
 //https://www.e-olymp.com/ru/submissions/7448393
 public class task5 {
+
+
     private static void solve(final FastScanner in, final PrintWriter out) {
         Queue queue = new Queue();
         boolean flag = true;
