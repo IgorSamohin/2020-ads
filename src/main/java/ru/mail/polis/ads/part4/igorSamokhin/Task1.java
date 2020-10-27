@@ -17,39 +17,44 @@ public final class Task1 {
         int[][] d = new int[n][n];
 
         StringBuilder[][] stringBuilders = new StringBuilder[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                stringBuilders[i][j] = new StringBuilder();
+            }
+        }
+
 
         for (int i = 0; i < n; i++) {
             d[i][i] = 1;
-            stringBuilders[i][i] = new StringBuilder()
+            stringBuilders[i][i]
                     .append(getPairedBrackets(str.charAt(i)));
         }
 
         for (int j = n - 1; j > 0; j--) {
             for (int i = 0; i < j; i++) {
-//                d[i][i + n - j];
                 if ((str.charAt(i) == '[' && str.charAt(i + n - j) == ']')
                         || (str.charAt(i) == '(' && str.charAt(i + n - j) == ')')) {
-                    d[i][i + n - j] = d[i + 1][i + n - j];
-                    stringBuilders[i][i + n - j] = new StringBuilder()
+                    d[i][i + n - j] = d[i + 1][i + n - j - 1];
+                    stringBuilders[i][i + n - j]
                             .append(str.charAt(i))
-                            .append(stringBuilders[i + 1][i + n - j -1])
+                            .append(stringBuilders[i + 1][i + n - j - 1])
                             .append(str.charAt(i + n - j));
                 } else {
-                    int min = d[i][i] + d[i + 1][i+n-j];
+                    int min = d[i][i] + d[i + 1][i + n - j];
                     StringBuilder subString = new StringBuilder()
                             .append(stringBuilders[i][i])
-                            .append(stringBuilders[i + 1][i + n -j]);
+                            .append(stringBuilders[i + 1][i + n - j]);
 
                     for (int k = i; k < i + n - j; k++) {
                         if ((d[i][k] + d[k + 1][i + n - j]) < min) {
                             min = d[i][k] + d[k + 1][i + n - j];
                             subString = new StringBuilder()
                                     .append(stringBuilders[i][k])
-                                    .append(stringBuilders[k + 1][n - 1]);
+                                    .append(stringBuilders[k + 1][i + n - j]);
                         }
                     }
                     d[i][i + n - j] = min;
-                    stringBuilders[i][i + n - j] = new StringBuilder()
+                    stringBuilders[i][i + n - j]
                             .append(subString);
                 }
 
