@@ -27,8 +27,6 @@ public final class Task2 {
             d[i] = new Node();
         }
 
-//        d[1].incrValue(arr[1][m]);
-
         for (int i = m; i > 0; i--) {
             if (i != m) {
                 d[1].addForwardStep(d[1]);
