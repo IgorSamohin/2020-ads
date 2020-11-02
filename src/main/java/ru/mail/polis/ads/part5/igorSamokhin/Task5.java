@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 //https://www.e-olymp.com/ru/submissions/7619084
-public final class Task1 {
+public final class Task5 {
     private static void solve(final FastScanner in, final PrintWriter out) {
         int N = in.nextInt();
 
