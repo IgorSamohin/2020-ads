@@ -14,7 +14,6 @@ public final class Task1 {
     private static void solve(final FastScanner in, final PrintWriter out) {
         int N = in.nextInt();
 
-        StringBuilder arrq = new StringBuilder();
         ArrayList<Integer> arr = new ArrayList<Integer>(N);
 
         for (int i = 1; i <= N; i++) {
