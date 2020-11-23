@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ru.mail.polis.ads.hash.igorSamokhin.HashTable;
+
 /**
  * Basic tests on {@link HashTable}.
  */
@@ -40,8 +42,7 @@ class HashTableBaseTest {
     }
     
     HashTable<String, String> newTable() {
-        // Use implementation
-        return null;
+        return new HashTable<String, String>();
     }
     
     HashTable<Key, String> newStrangeKeyTable() {
