@@ -59,7 +59,7 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
 
         Node temp = arr[index];
         while (temp != null) {
-            if (temp.key == key) {
+            if (temp.key.equals(key)) {
                 return (Value) temp.value;
             }
             temp = temp.next;
@@ -86,13 +86,13 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
         } else {
             Node temp = arr[index];
             while (temp.next != null) {
-                if (arr[index].key == key) {
+                if (arr[index].key.equals(key)) {
                     break;
                 }
                 temp = temp.next;
             }
 
-            if (arr[index].key == key) {
+            if (arr[index].key.equals(key)) {
                 arr[index].value = value;
             } else {
                 arr[index].next = new Node(key, value, null);
@@ -114,7 +114,7 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
         }
 
         Node temp = arr[index];
-        if (temp.key == key) {
+        if (temp.key.equals(key)) {
             arr[index] = temp.next;
             --size;
             return (Value) temp.value;
