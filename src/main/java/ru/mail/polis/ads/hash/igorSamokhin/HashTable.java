@@ -37,16 +37,16 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
             return;
         }
 
-        Node[] newArr = arr;
-        arr = new Node[capacity * 2];
-        for (int i = 0; i < capacity; ++i) {
-            Node temp = arr[i];
+        Node[] oldArr = arr;
+        arr = new Node[capacity *= 2];
+        size = 0;
+        for (int i = 0; i < capacity/2; ++i) {
+            Node temp = oldArr[i];
             while (temp != null) {
                 this.put((Key) temp.key, (Value) temp.value);
                 temp = temp.next;
             }
         }
-        capacity *= 2;
     }
 
     @Override
@@ -86,16 +86,16 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
         } else {
             Node temp = arr[index];
             while (temp.next != null) {
-                if (arr[index].key.equals(key)) {
+                if (temp.key.equals(key)) {
                     break;
                 }
                 temp = temp.next;
             }
 
-            if (arr[index].key.equals(key)) {
-                arr[index].value = value;
+            if (temp.key.equals(key)) {
+                temp.value = value;
             } else {
-                arr[index].next = new Node(key, value, null);
+                temp.next = new Node(key, value, null);
                 ++size;
                 resize();
             }
@@ -120,7 +120,7 @@ public class HashTable<Key, Value> implements ru.mail.polis.ads.hash.HashTable<K
             return (Value) temp.value;
         }
 
-        while (temp.next != null && temp.next.key != key) {
+        while (temp.next != null && !temp.next.key.equals(key)) {
             temp = temp.next;
         }
 
