@@ -7,20 +7,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
-
+//https://www.e-olymp.com/ru/submissions/7982191  - 45%
 public final class Task1 {
     private static void solve(final FastScanner in, final PrintWriter out) {
         int n = in.nextInt();
         int m = in.nextInt();
 
-        HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>(2 * n);
-        for (int i = 1; i <= n; ++i) {
-            graph.put(i, null);
+        HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>(n);
 
-        }
-
+        int max = 0;
         for (int i = 0; i < m; ++i) {
             int node = in.nextInt();
             int edge = in.nextInt();
@@ -30,16 +29,32 @@ public final class Task1 {
             }
             edges.add(edge);
             graph.put(node, edges);
+            max = Math.max(Math.max(node, edge), max);
         }
 
-        if (hasCycle(graph, new boolean[n], new boolean[n])) {
+        if (hasCycle(graph, new boolean[max], new boolean[max])) {
             out.println("-1");
             return;
         }
-        String s = dfs(graph, n).substring(1);
-        out.println(s);
+        Stack<Integer> stack = new Stack<>();
+        dfs(graph, max, stack);
 
+        while(!stack.isEmpty()){
+            out.print(stack.pop() + " ");
+        }
     }
+//    14 23
+//    1 6 1 5 1 12 1 4
+//    2 5 2 9 2 3
+//    3 6 3 7 3 10
+//    4 3 4 7 4 14
+//    5 8
+//    6 9 6 13
+//    7 6 7 1
+//    9 8
+//    10 12 10 11
+//    11 14
+//    13 10
 
     /**
      * @param map     - graph
@@ -47,12 +62,11 @@ public final class Task1 {
      * @param colour  - array of colours. false = white, true = black
      */
     public static boolean hasCycle(HashMap<Integer, ArrayList<Integer>> map, boolean[] visited, boolean[] colour) {
-        for (int i = 1; i <= map.size(); ++i) {
-            if (map.get(i) != null) {
-                visited[i - 1] = true;
-                if (hasCycleHelp(map, visited, colour, i)) {
-                    return true;
-                }
+        for (Map.Entry el : map.entrySet()) {
+            int i = (int) el.getKey();
+            visited[i - 1] = true;
+            if (hasCycleHelp(map, visited, colour, i)) {
+                return true;
             }
         }
         return false;
@@ -66,9 +80,9 @@ public final class Task1 {
             return false;
         }
         for (int j : map.get(i)) {
-            if (colour[j - 1] == true) {
+            if (colour[j - 1]) {
                 return true;
-            }else if (visited[j - 1] == false) {
+            } else {
                 if (hasCycleHelp(map, visited, colour, j)) {
                     return true;
                 }
@@ -79,34 +93,31 @@ public final class Task1 {
         return false;
     }
 
-    public static String dfs(HashMap<Integer, ArrayList<Integer>> map, int n) {
-        boolean[] visited = new boolean[n], colour = new boolean[n];
-        StringBuilder stringBuilder = new StringBuilder();
+    public static void dfs(HashMap<Integer, ArrayList<Integer>> map, int n, Stack<Integer> stack) {
+        boolean[] visited = new boolean[n];
 
-        for (int i = 1; i <= map.size(); ++i) {
+        for (Map.Entry el : map.entrySet()) {
+            int i = (int) el.getKey();
             if (!visited[i - 1]) {
-                stringBuilder.append(dfsHelp(map, visited, i));
+                dfsHelp(map, visited, i, stack);
             }
         }
-        return stringBuilder.reverse().toString();
     }
 
-    private static String dfsHelp(HashMap<Integer, ArrayList<Integer>> map, boolean[] visited, int i) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private static void dfsHelp(HashMap<Integer, ArrayList<Integer>> map, boolean[] visited, int i, Stack<Integer> stack) {
         visited[i - 1] = true;
 
         if (map.get(i) == null) {
-            stringBuilder.append(i).append(" ");
-            return stringBuilder.toString();
+            stack.push(i);
+            return;
         }
 
         for (int j : map.get(i)) {
-            if (visited[j - 1] == false) {
-                stringBuilder.append(dfsHelp(map, visited, j));
+            if (!visited[j - 1]) {
+                dfsHelp(map, visited, j, stack);
             }
         }
-        stringBuilder.append(i).append(" ");
-        return stringBuilder.toString();
+        stack.push(i);
     }
 
     private static class FastScanner {
@@ -140,3 +151,4 @@ public final class Task1 {
         }
     }
 }
+
